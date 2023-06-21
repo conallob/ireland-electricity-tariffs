@@ -7,18 +7,18 @@ import (
 )
 
 type TariffPrice struct {
-	Day float64       // Price per kWh, in €
-	Peak float64      // Price per kWh, in €
-	Night float64     // Price per kWh, in €
-  VATRate float64   // Applicable VAT Rate, in decimal form
-  Discount float64  // Applicable Discount Rate, in decimal form
+	Day float64  `json:"day"`						// Price per kWh, in €
+	Peak float64  `json:"peak"`					// Price per kWh, in €
+	Night float64  `json:"night"`				// Price per kWh, in €
+  VATRate float64 `json:"VAT"`				// Applicable VAT Rate, in decimal form
+  Discount float64 `json:"discount"`	// Applied Discount, in decimal form
 }
 
 
 type ElectricityTariff struct {
-  Provider string
-  PlanName string
-	Date time.Time			// Effective Date (can be in the future)
+  Provider string `json:"provider"`
+  PlanName string `json:"plan"`
+	Date time.Time	`json:"date"`		// Effective Date (can be in the future)
   Price TariffPrice
 }
 
