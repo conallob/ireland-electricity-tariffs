@@ -15,19 +15,20 @@ type TariffPrice struct {
 }
 
 type ElectricityTariff struct {
-	Provider string    `json:"provider"`
-	PlanName string    `json:"plan"`
-	Date     time.Time `json:"date"` // Effective Date (can be in the future)
-	Price    TariffPrice
+	Provider         string    `json:"provider"`
+	PlanName         string    `json:"plan"`
+	PlanShortName    string `json:"shortname"`
+	Price            TariffPrice
 }
 
 func main() {
 
-	ieTariffs := map[string]*ElectricityTariff{
-		"energia-smart-15": {
+        // Map Keys are Effective Date (can be in the future)
+	ieTariffs := map[time.Time]*ElectricityTariff{
+		time.Date(2023, time.June, 13, 0, 0, 0, 0, time.UTC): {
 			Provider: "Energia",
 			PlanName: "Smart Data - 15",
-			Date:     time.Date(2023, time.June, 13, 0, 0, 0, 0, time.UTC),
+			PlanShortName: "energia-smart-15",
 			Price: TariffPrice{
 				Day:      0.4576,
 				Peak:     0.4794,
