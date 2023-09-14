@@ -39,7 +39,7 @@ func main() {
 				Discount: 	0.15,
 			},
 		},
-		time.Date(2023, time.September, 15, 0, 0, 0, 0, time.UTC): {
+		time.Date(2023, time.September, 14, 0, 0, 0, 0, time.UTC): {
 			Provider: "Energia",
 			PlanName: "Smart Data - 15",
 			PlanShortName: "energia-smart-15",
