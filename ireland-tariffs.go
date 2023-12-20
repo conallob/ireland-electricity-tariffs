@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"time"
 )
 
@@ -19,13 +20,16 @@ type ElectricityTariff struct {
 	Provider      string `json:"provider"`
 	PlanName      string `json:"plan"`
 	PlanShortName string `json:"shortname"`
-	Price         TariffPrice
+	Price         TariffPrice `json:"price"`
 }
 
 func main() {
 
 	// Map Keys are Effective Date (can be in the future)
 	ieTariffs := map[time.Time]*ElectricityTariff{
+		/*
+		TODO(conallob): Make historic price values work
+		
 		time.Date(2023, time.June, 13, 0, 0, 0, 0, time.UTC): {
 			Provider:      "Energia",
 			PlanName:      "Smart Data - 15",
@@ -65,6 +69,7 @@ func main() {
 				Discount:        0.15,
 			},
 		},
+		*/
 		time.Date(2023, time.December, 2, 0, 0, 0, 0, time.UTC): {
 			Provider:      "Energia",
 			PlanName:      "Smart Data - 15",
@@ -80,6 +85,17 @@ func main() {
 		},		
 	}
 
-	fmt.Println(json.MarshalIndent(ieTariffs, "", "  "))
+	for _, pricePlan := range ieTariffs {
+		fileName := fmt.Sprintf("%s.json", pricePlan.PlanShortName)
+		payload, err := json.MarshalIndent(pricePlan, "", "  ")
+		if err != nil {
+		    fmt.Errorf("%v", err)
+		}
+
+		e := os.WriteFile(fileName, payload, 0644)
+		if e != nil {
+		    fmt.Errorf("%v", e)
+		}
+	}
 
 }
