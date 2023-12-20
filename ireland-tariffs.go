@@ -65,6 +65,19 @@ func main() {
 				Discount:        0.15,
 			},
 		},
+		time.Date(2023, time.December, 2, 0, 0, 0, 0, time.UTC): {
+			Provider:      "Energia",
+			PlanName:      "Smart Data - 15",
+			PlanShortName: "energia-smart-15",
+			Price: TariffPrice{
+				Day:             0.3731,
+				Peak:            0.391,
+				Night:           0.1998,
+				MicroGeneration: 0.24,
+				VATRate:         0.09,
+				Discount:        0.15,
+			},
+		},		
 	}
 
 	fmt.Println(json.MarshalIndent(ieTariffs, "", "  "))
