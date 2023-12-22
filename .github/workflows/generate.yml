@@ -20,8 +20,10 @@ jobs:
         run: go install .
       - name: Generate Output
         run: go run ireland-tariffs.go     
-      - name: Upload Go test results
-        uses: actions/upload-artifact@v3
+      - name: Upload Go Output
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: Generated JSON Data
-          path: ./*.json
+          files: |
+            *.json
+    
