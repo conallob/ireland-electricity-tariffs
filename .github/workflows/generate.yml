@@ -1,6 +1,8 @@
 name: Generate Go Artifacts
 
-on: [push]
+on:
+  release:
+    types: [created]
 
 jobs:
   build:
