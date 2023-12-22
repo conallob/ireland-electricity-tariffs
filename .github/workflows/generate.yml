@@ -19,11 +19,9 @@ jobs:
       - name: Install dependencies
         run: go install .
       - name: Generate Output
-        run: go run ireland-tariffs.go
-      - name: List Output
-        run: ls        
-     # - name: Upload Go test results
-     #   uses: actions/upload-artifact@v3
-     #   with:
-     #     name: Generated JSON Data
-     #     path: *.json
+        run: go run ireland-tariffs.go     
+      - name: Upload Go test results
+        uses: actions/upload-artifact@v3
+        with:
+          name: Generated JSON Data
+          path: ./*.json
