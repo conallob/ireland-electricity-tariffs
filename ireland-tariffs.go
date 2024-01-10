@@ -36,8 +36,8 @@ func main() {
 				Peak:            0.391,
 				Night:           0.1998,
 				MicroGeneration: 0.24,
-				VATRate:         0.09,
-				Discount:        0.15,
+				VATRate:         1.09,  // +9% VAT
+				Discount:        0.85,  // -15% discount
 			},
 		},		
 	}
