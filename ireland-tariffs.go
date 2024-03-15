@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"math"
 	"os"
 	"time"
 )
@@ -22,6 +23,13 @@ type ElectricityTariff struct {
 	PlanShortName string `json:"shortname"`
 	Price         TariffPrice `json:"price"`
 }
+
+
+func CurrencyRounding(amount float64, precision int) float64 {
+	p := math.Pow(10, float64(precision))
+	return (amount * p) / p
+}
+
 
 func main() {
 
@@ -43,6 +51,7 @@ func main() {
 	}
 
 	for _, pricePlan := range ieTariffs {
+		// Ex VAT, without discounts
 		fileName := fmt.Sprintf("%s.json", pricePlan.PlanShortName)
 		payload, err := json.MarshalIndent(pricePlan, "", "  ")
 		if err != nil {
@@ -50,6 +59,23 @@ func main() {
 		}
 
 		e := os.WriteFile(fileName, payload, 0644)
+		if e != nil {
+		    fmt.Errorf("%v", e)
+		}
+		// Inc VAT, with discounts
+    pricePlan.Price.Day *= pricePlan.Price.VATRate * pricePlan.Price.Discount
+		pricePlan.Price.Day = CurrencyRounding(pricePlan.Price.Day, 4)	
+    pricePlan.Price.Peak *= pricePlan.Price.VATRate * pricePlan.Price.Discount
+		pricePlan.Price.Peak = CurrencyRounding(pricePlan.Price.Peak, 4)	
+    pricePlan.Price.Night *= pricePlan.Price.VATRate * pricePlan.Price.Discount
+		pricePlan.Price.Night = CurrencyRounding(pricePlan.Price.Night, 4)	
+		fileName = fmt.Sprintf("%s.inc.vat.json", pricePlan.PlanShortName)
+		payload, err = json.MarshalIndent(pricePlan, "", "  ")
+		if err != nil {
+		    fmt.Errorf("%v", err)
+		}
+
+		e = os.WriteFile(fileName, payload, 0644)
 		if e != nil {
 		    fmt.Errorf("%v", e)
 		}
