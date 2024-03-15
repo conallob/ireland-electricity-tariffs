@@ -18,18 +18,16 @@ type TariffPrice struct {
 }
 
 type ElectricityTariff struct {
-	Provider      string `json:"provider"`
-	PlanName      string `json:"plan"`
-	PlanShortName string `json:"shortname"`
+	Provider      string      `json:"provider"`
+	PlanName      string      `json:"plan"`
+	PlanShortName string      `json:"shortname"`
 	Price         TariffPrice `json:"price"`
 }
-
 
 func CurrencyRounding(amount float64, precision int) float64 {
 	p := math.Pow(10, float64(precision))
 	return (amount * p) / p
 }
-
 
 func main() {
 
@@ -44,10 +42,10 @@ func main() {
 				Peak:            0.3617,
 				Night:           0.1848,
 				MicroGeneration: 0.24,
-				VATRate:         1.09,  // +9% VAT
-				Discount:        0.85,  // -15% discount
+				VATRate:         1.09, // +9% VAT
+				Discount:        0.85, // -15% discount
 			},
-		},		
+		},
 	}
 
 	for _, pricePlan := range ieTariffs {
@@ -55,29 +53,29 @@ func main() {
 		fileName := fmt.Sprintf("%s.json", pricePlan.PlanShortName)
 		payload, err := json.MarshalIndent(pricePlan, "", "  ")
 		if err != nil {
-		    fmt.Errorf("%v", err)
+			fmt.Errorf("%v", err)
 		}
 
 		e := os.WriteFile(fileName, payload, 0644)
 		if e != nil {
-		    fmt.Errorf("%v", e)
+			fmt.Errorf("%v", e)
 		}
 		// Inc VAT, with discounts
-    pricePlan.Price.Day *= pricePlan.Price.VATRate * pricePlan.Price.Discount
-		pricePlan.Price.Day = CurrencyRounding(pricePlan.Price.Day, 4)	
-    pricePlan.Price.Peak *= pricePlan.Price.VATRate * pricePlan.Price.Discount
-		pricePlan.Price.Peak = CurrencyRounding(pricePlan.Price.Peak, 4)	
-    pricePlan.Price.Night *= pricePlan.Price.VATRate * pricePlan.Price.Discount
-		pricePlan.Price.Night = CurrencyRounding(pricePlan.Price.Night, 4)	
+		pricePlan.Price.Day *= pricePlan.Price.VATRate * pricePlan.Price.Discount
+		pricePlan.Price.Day = CurrencyRounding(pricePlan.Price.Day, 4)
+		pricePlan.Price.Peak *= pricePlan.Price.VATRate * pricePlan.Price.Discount
+		pricePlan.Price.Peak = CurrencyRounding(pricePlan.Price.Peak, 4)
+		pricePlan.Price.Night *= pricePlan.Price.VATRate * pricePlan.Price.Discount
+		pricePlan.Price.Night = CurrencyRounding(pricePlan.Price.Night, 4)
 		fileName = fmt.Sprintf("%s.inc.vat.json", pricePlan.PlanShortName)
 		payload, err = json.MarshalIndent(pricePlan, "", "  ")
 		if err != nil {
-		    fmt.Errorf("%v", err)
+			fmt.Errorf("%v", err)
 		}
 
 		e = os.WriteFile(fileName, payload, 0644)
 		if e != nil {
-		    fmt.Errorf("%v", e)
+			fmt.Errorf("%v", e)
 		}
 	}
 
