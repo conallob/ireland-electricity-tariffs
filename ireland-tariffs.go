@@ -33,7 +33,7 @@ func main() {
 
 	// Map Keys are Effective Date (can be in the future)
 	ieTariffs := map[time.Time]*ElectricityTariff{
-		time.Date(2024, time.March, 1, 0, 0, 0, 0, time.UTC): {
+		time.Date(2025, time.February, 1, 0, 0, 0, 0, time.UTC): {
 			Provider:      "Energia",
 			PlanName:      "Smart Data - 15",
 			PlanShortName: "energia-smart-15",
@@ -41,7 +41,7 @@ func main() {
 				Day:             0.3451,
 				Peak:            0.3617,
 				Night:           0.1848,
-				MicroGeneration: 0.24,
+				MicroGeneration: 0.20,
 				VATRate:         1.09, // +9% VAT
 				Discount:        0.85, // -15% discount
 			},
