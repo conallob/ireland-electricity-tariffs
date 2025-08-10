@@ -75,6 +75,20 @@ func main() {
 			},
 		},
 		{
+			Provider:      "Electric Ireland",
+			PlanName:      "Smart Dual Fuel",
+			PlanShortName: "electric-ireland-smart-dual-fuel",
+			EffectiveDate: time.Date(2025, time.August, 10, 0, 0, 0, 0, time.UTC),
+			Price: TariffPrice{
+				Day:             0.23779,
+				Peak:            0.25368,
+				Night:           0.12495,
+				MicroGeneration: 0.195,
+				VATRate:         1.09, // +9% VAT
+				Discount:        0.7, // -30% discount
+			},
+		},		
+		{
 			Provider:      "Bord Gáis Energy",
 			PlanName:      "Standard",
 			PlanShortName: "bord-gais-standard",
