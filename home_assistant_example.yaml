@@ -1,0 +1,93 @@
+# Example Home Assistant configuration for Ireland electricity tariffs
+# Place this in your configuration.yaml or in a separate file and include it
+
+# REST sensor to fetch tariff data
+rest:
+  - resource: "https://github.com/conallob/ireland-electricity-tariffs/releases/latest/download/home_assistant_tariffs.json"
+    scan_interval: 86400  # Update once per day
+    sensor:
+      - name: "Ireland Electricity Tariffs"
+        value_template: "OK"
+        json_attributes_path: "$.tariffs"
+        json_attributes:
+          - "energia-smart-15"
+          - "electric-ireland-standard"
+          - "electric-ireland-smart-dual-fuel"
+          - "bord-gais-standard"
+
+# Template sensors to extract individual tariff rates
+template:
+  - sensor:
+      # Energia Smart 15 tariff rates
+      - name: "Energia Smart 15 Day Rate"
+        unit_of_measurement: "EUR/kWh"
+        state: "{{ state_attr('sensor.ireland_electricity_tariffs', 'energia-smart-15')['rates']['day'] }}"
+
+      - name: "Energia Smart 15 Night Rate"
+        unit_of_measurement: "EUR/kWh"
+        state: "{{ state_attr('sensor.ireland_electricity_tariffs', 'energia-smart-15')['rates']['night'] }}"
+
+      - name: "Energia Smart 15 Peak Rate"
+        unit_of_measurement: "EUR/kWh"
+        state: "{{ state_attr('sensor.ireland_electricity_tariffs', 'energia-smart-15')['rates']['peak'] }}"
+
+      # Electric Ireland Standard tariff rates
+      - name: "Electric Ireland Standard Day Rate"
+        unit_of_measurement: "EUR/kWh"
+        state: "{{ state_attr('sensor.ireland_electricity_tariffs', 'electric-ireland-standard')['rates']['day'] }}"
+
+      - name: "Electric Ireland Standard Night Rate"
+        unit_of_measurement: "EUR/kWh"
+        state: "{{ state_attr('sensor.ireland_electricity_tariffs', 'electric-ireland-standard')['rates']['night'] }}"
+
+      - name: "Electric Ireland Standard Peak Rate"
+        unit_of_measurement: "EUR/kWh"
+        state: "{{ state_attr('sensor.ireland_electricity_tariffs', 'electric-ireland-standard')['rates']['peak'] }}"
+
+# Utility meter with tariff tracking
+# This example assumes you have a sensor called sensor.energy_consumption tracking your usage
+utility_meter:
+  daily_energy:
+    source: sensor.energy_consumption
+    name: Daily Energy
+    cycle: daily
+    tariffs:
+      - day
+      - night
+      - peak
+
+# Example automation to switch tariffs based on time
+# Adjust times according to your provider's tariff schedule
+automation:
+  - alias: "Set Night Tariff"
+    trigger:
+      - platform: time
+        at: "23:00:00"
+    action:
+      - service: utility_meter.select_tariff
+        target:
+          entity_id: utility_meter.daily_energy
+        data:
+          tariff: "night"
+
+  - alias: "Set Day Tariff"
+    trigger:
+      - platform: time
+        at: "08:00:00"
+    action:
+      - service: utility_meter.select_tariff
+        target:
+          entity_id: utility_meter.daily_energy
+        data:
+          tariff: "day"
+
+  - alias: "Set Peak Tariff"
+    trigger:
+      - platform: time
+        at: "17:00:00"
+    action:
+      - service: utility_meter.select_tariff
+        target:
+          entity_id: utility_meter.daily_energy
+        data:
+          tariff: "peak"
