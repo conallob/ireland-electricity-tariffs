@@ -44,6 +44,19 @@ template:
         unit_of_measurement: "EUR/kWh"
         state: "{{ state_attr('sensor.ireland_electricity_tariffs', 'electric-ireland-standard')['rates']['peak'] }}"
 
+      # Current active tariff rate - rotates based on utility meter tariff selection
+      # Change 'energia-smart-15' to your preferred tariff
+      - name: "Current Electricity Rate"
+        unit_of_measurement: "EUR/kWh"
+        state: >
+          {% set tariff = states('select.daily_energy') %}
+          {% set tariff_data = state_attr('sensor.ireland_electricity_tariffs', 'energia-smart-15') %}
+          {% if tariff_data and tariff in ['day', 'night', 'peak'] %}
+            {{ tariff_data['rates'][tariff] }}
+          {% else %}
+            unavailable
+          {% endif %}
+
 # Utility meter with tariff tracking
 # This example assumes you have a sensor called sensor.energy_consumption tracking your usage
 utility_meter:
