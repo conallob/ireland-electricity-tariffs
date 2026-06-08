@@ -1,0 +1,14 @@
+{
+  "provider": "Bord Gáis Energy",
+  "plan": "Standard",
+  "shortname": "bord-gais-standard",
+  "price": {
+    "day": 0.3489,
+    "peak": 0.3689,
+    "night": 0.1889,
+    "microgeneration": 0.18,
+    "VAT": 1.09,
+    "discount": 0.9
+  },
+  "effective_date": "2025-03-01T00:00:00Z"
+}
