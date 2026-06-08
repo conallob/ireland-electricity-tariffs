@@ -13,6 +13,8 @@ rest:
           - "energia-smart-15"
           - "electric-ireland-standard"
           - "electric-ireland-smart-dual-fuel"
+          - "electric-ireland-smart-24hr"
+          - "electric-ireland-smart-weekender-sat"
           - "bord-gais-standard"
 
 # Template sensors to extract individual tariff rates
@@ -44,17 +46,59 @@ template:
         unit_of_measurement: "EUR/kWh"
         state: "{{ state_attr('sensor.ireland_electricity_tariffs', 'electric-ireland-standard')['rates']['peak'] }}"
 
-      # Current active tariff rate - rotates based on utility meter tariff selection
-      # Change 'energia-smart-15' to your preferred tariff
-      - name: "Current Electricity Rate"
+      # Electric Ireland Smart 24hr — flat rate, same for all periods
+      - name: "Electric Ireland Smart 24hr Rate"
         unit_of_measurement: "EUR/kWh"
+        state: "{{ state_attr('sensor.ireland_electricity_tariffs', 'electric-ireland-smart-24hr')['rates']['day'] }}"
+
+      # Electric Ireland Smart Weekender SAT tariff rates
+      - name: "Electric Ireland Smart Weekender SAT Day Rate"
+        unit_of_measurement: "EUR/kWh"
+        state: "{{ state_attr('sensor.ireland_electricity_tariffs', 'electric-ireland-smart-weekender-sat')['rates']['day'] }}"
+
+      - name: "Electric Ireland Smart Weekender SAT Weekend Rate"
+        unit_of_measurement: "EUR/kWh"
+        state: "{{ state_attr('sensor.ireland_electricity_tariffs', 'electric-ireland-smart-weekender-sat')['rates']['peak'] }}"
+
+      # Current unit price of grid electricity — updates every minute based on time of day.
+      # Edit 'electric-ireland-smart-24hr' below to match your own plan shortname.
+      # For time-of-use plans the sensor picks the right band automatically;
+      # for the Smart 24hr flat-rate plan it always returns the single unit price.
+      - name: "Current Grid Electricity Price"
+        unit_of_measurement: "EUR/kWh"
+        device_class: monetary
+        state_class: measurement
+        icon: mdi:flash
         state: >
-          {% set tariff = states('select.daily_energy') %}
-          {% set tariff_data = state_attr('sensor.ireland_electricity_tariffs', 'energia-smart-15') %}
-          {% if tariff_data and tariff in ['day', 'night', 'peak'] %}
-            {{ tariff_data['rates'][tariff] }}
-          {% else %}
+          {% set plan = 'electric-ireland-smart-24hr' %}
+          {% set rates = state_attr('sensor.ireland_electricity_tariffs', plan) %}
+          {% if rates is none %}
             unavailable
+          {% else %}
+            {% set h = now().hour %}
+            {% set dow = now().weekday() %}  {# 0=Monday … 6=Sunday #}
+            {% if plan == 'electric-ireland-smart-weekender-sat' %}
+              {# Free on Saturdays (weekday index 5) #}
+              {% if dow == 5 %}
+                {{ rates['rates']['peak'] }}
+              {% elif h >= 23 or h < 8 %}
+                {{ rates['rates']['night'] }}
+              {% else %}
+                {{ rates['rates']['day'] }}
+              {% endif %}
+            {% elif plan in ['electric-ireland-standard', 'energia-smart-15', 'bord-gais-standard'] %}
+              {# Night: 23:00–08:00  Peak: 17:00–19:00  Day: everything else #}
+              {% if h >= 23 or h < 8 %}
+                {{ rates['rates']['night'] }}
+              {% elif h >= 17 and h < 19 %}
+                {{ rates['rates']['peak'] }}
+              {% else %}
+                {{ rates['rates']['day'] }}
+              {% endif %}
+            {% else %}
+              {# Flat-rate plans (e.g. Smart 24hr): single unit price all day #}
+              {{ rates['rates']['day'] }}
+            {% endif %}
           {% endif %}
 
 # Utility meter with tariff tracking

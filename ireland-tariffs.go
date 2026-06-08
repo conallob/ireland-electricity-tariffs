@@ -157,6 +157,30 @@ func main() {
 			1.09,    // VAT rate
 			0.7,     // 30% discount
 		),
+		NewTariff(
+			"Electric Ireland",
+			"Smart 24hr",
+			"electric-ireland-smart-24hr",
+			time.Date(2026, time.July, 1, 0, 0, 0, 0, time.UTC),
+			0.3418, // day rate (flat rate — same for all periods)
+			0.3418, // peak rate
+			0.3418, // night rate
+			0.19,   // microgeneration rate
+			1.09,   // VAT rate
+			1.00,   // no discount
+		),
+		NewTariff(
+			"Electric Ireland",
+			"Smart Weekender SAT",
+			"electric-ireland-smart-weekender-sat",
+			time.Date(2026, time.July, 1, 0, 0, 0, 0, time.UTC),
+			0.3752, // day rate (weekdays)
+			0.0000, // peak rate — free on Saturdays (Weekender SAT rate)
+			0.3752, // night rate (weekdays)
+			0.19,   // microgeneration rate
+			1.09,   // VAT rate
+			1.00,   // no discount
+		),
 	}
 
 	// Bord Gáis Energy tariffs
