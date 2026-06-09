@@ -1,0 +1,14 @@
+{
+  "provider": "Energia",
+  "plan": "Smart Data - 15",
+  "shortname": "energia-smart-15",
+  "price": {
+    "day": 0.3451,
+    "peak": 0.3617,
+    "night": 0.1848,
+    "microgeneration": 0.2,
+    "VAT": 1.09,
+    "discount": 0.85
+  },
+  "effective_date": "2025-02-01T00:00:00Z"
+}
