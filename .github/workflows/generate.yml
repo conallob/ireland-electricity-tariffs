@@ -27,7 +27,7 @@ jobs:
         run: go run ireland-tariffs.go
         
       - name: Upload Go Output
-        uses: skx/github-action-publish-binaries@release-1.3
+        uses: skx/github-action-publish-binaries@release-2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
