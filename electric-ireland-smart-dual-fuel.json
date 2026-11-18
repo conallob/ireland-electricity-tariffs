@@ -1,0 +1,14 @@
+{
+  "provider": "Electric Ireland",
+  "plan": "Smart Dual Fuel",
+  "shortname": "electric-ireland-smart-dual-fuel",
+  "price": {
+    "day": 0.23779,
+    "peak": 0.25368,
+    "night": 0.12495,
+    "microgeneration": 0.195,
+    "VAT": 1.09,
+    "discount": 0.7
+  },
+  "effective_date": "2025-08-10T00:00:00Z"
+}

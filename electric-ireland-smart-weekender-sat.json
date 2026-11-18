@@ -1,0 +1,14 @@
+{
+  "provider": "Electric Ireland",
+  "plan": "Smart Weekender SAT",
+  "shortname": "electric-ireland-smart-weekender-sat",
+  "price": {
+    "day": 0.3752,
+    "peak": 0,
+    "night": 0.3752,
+    "microgeneration": 0.19,
+    "VAT": 1.09,
+    "discount": 1
+  },
+  "effective_date": "2026-07-01T00:00:00Z"
+}

@@ -1,0 +1,14 @@
+{
+  "provider": "Electric Ireland",
+  "plan": "Smart 24hr",
+  "shortname": "electric-ireland-smart-24hr",
+  "price": {
+    "day": 0.3726,
+    "peak": 0.3726,
+    "night": 0.3726,
+    "microgeneration": 0.19,
+    "VAT": 1.09,
+    "discount": 1
+  },
+  "effective_date": "2026-07-01T00:00:00Z"
+}

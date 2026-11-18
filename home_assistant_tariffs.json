@@ -1,0 +1,118 @@
+{
+  "tariffs": {
+    "bord-gais-standard": {
+      "provider": "Bord Gáis Energy",
+      "plan": "Standard",
+      "effective_date": "2025-03-01",
+      "rates": {
+        "day": 0.3423,
+        "microgeneration": 0.18,
+        "night": 0.1853,
+        "peak": 0.3619
+      },
+      "rates_ex_vat": {
+        "day": 0.3489,
+        "microgeneration": 0.18,
+        "night": 0.1889,
+        "peak": 0.3689
+      },
+      "vat_rate": 1.09,
+      "discount": 0.9
+    },
+    "electric-ireland-smart-24hr": {
+      "provider": "Electric Ireland",
+      "plan": "Smart 24hr",
+      "effective_date": "2026-07-01",
+      "rates": {
+        "day": 0.3726,
+        "microgeneration": 0.19,
+        "night": 0.3726,
+        "peak": 0.3726
+      },
+      "rates_ex_vat": {
+        "day": 0.3418,
+        "microgeneration": 0.19,
+        "night": 0.3418,
+        "peak": 0.3418
+      },
+      "vat_rate": 1.09,
+      "discount": 1
+    },
+    "electric-ireland-smart-dual-fuel": {
+      "provider": "Electric Ireland",
+      "plan": "Smart Dual Fuel",
+      "effective_date": "2025-08-10",
+      "rates": {
+        "day": 0.1814,
+        "microgeneration": 0.195,
+        "night": 0.0953,
+        "peak": 0.1936
+      },
+      "rates_ex_vat": {
+        "day": 0.23779,
+        "microgeneration": 0.195,
+        "night": 0.12495,
+        "peak": 0.25368
+      },
+      "vat_rate": 1.09,
+      "discount": 0.7
+    },
+    "electric-ireland-smart-weekender-sat": {
+      "provider": "Electric Ireland",
+      "plan": "Smart Weekender SAT",
+      "effective_date": "2026-07-01",
+      "rates": {
+        "day": 0.409,
+        "microgeneration": 0.19,
+        "night": 0.409,
+        "peak": 0
+      },
+      "rates_ex_vat": {
+        "day": 0.3752,
+        "microgeneration": 0.19,
+        "night": 0.3752,
+        "peak": 0
+      },
+      "vat_rate": 1.09,
+      "discount": 1
+    },
+    "electric-ireland-standard": {
+      "provider": "Electric Ireland",
+      "plan": "Standard",
+      "effective_date": "2025-01-01",
+      "rates": {
+        "day": 0.3838,
+        "microgeneration": 0.19,
+        "night": 0.2094,
+        "peak": 0.4056
+      },
+      "rates_ex_vat": {
+        "day": 0.3521,
+        "microgeneration": 0.19,
+        "night": 0.1921,
+        "peak": 0.3721
+      },
+      "vat_rate": 1.09,
+      "discount": 1
+    },
+    "energia-smart-15": {
+      "provider": "Energia",
+      "plan": "Smart Data - 15",
+      "effective_date": "2025-02-01",
+      "rates": {
+        "day": 0.3197,
+        "microgeneration": 0.2,
+        "night": 0.1712,
+        "peak": 0.3351
+      },
+      "rates_ex_vat": {
+        "day": 0.3451,
+        "microgeneration": 0.2,
+        "night": 0.1848,
+        "peak": 0.3617
+      },
+      "vat_rate": 1.09,
+      "discount": 0.85
+    }
+  }
+}

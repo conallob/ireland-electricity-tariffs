@@ -1,0 +1,14 @@
+{
+  "provider": "Electric Ireland",
+  "plan": "Standard",
+  "shortname": "electric-ireland-standard",
+  "price": {
+    "day": 0.3838,
+    "peak": 0.4056,
+    "night": 0.2094,
+    "microgeneration": 0.19,
+    "VAT": 1.09,
+    "discount": 1
+  },
+  "effective_date": "2025-01-01T00:00:00Z"
+}
